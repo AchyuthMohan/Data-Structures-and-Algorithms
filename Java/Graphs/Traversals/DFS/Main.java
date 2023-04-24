@@ -1,16 +1,26 @@
 import java.util.*;
-
-public class Main {
-    static class Edge {
-        int src;
-        int dst;
-
-        Edge(int s, int d) {
-            this.src = s;
-            this.dst = d;
+public class Main{
+    static class Edge{
+        int src,dest;
+        Edge(int s,int d){
+            this.dest=d;
+            this.src=s;
         }
     }
-
+    public static void  dfs(ArrayList<Edge>graph[],int currNode,boolean val[]){
+        if(val[currNode]==false){
+            System.out.print(currNode+" ");
+            val[currNode]=true;
+        }
+        for(int i=0;i<graph[currNode].size();i++){
+            Edge e=graph[currNode].get(i);
+            if(val[e.dest]==false){
+                dfs(graph, e.dest, val);
+            }
+           
+        }
+        
+    }
     public static void createGraph(ArrayList<Edge> graph[]) {
         for (int i = 0; i < graph.length; i++) {
             graph[i] = new ArrayList<Edge>();
@@ -33,33 +43,14 @@ public class Main {
         graph[6].add(new Edge(6, 5));
 
     }
-
-    public static void bfs(ArrayList<Edge> graph[],int v) {
-        Queue<Integer>q=new LinkedList<>();
-        q.offer(0);
-        boolean vis[]=new boolean[7];
-        for(int i=0;i<7;i++){
-            vis[i]=false;
-        }
-        while(!q.isEmpty()){
-            int curr = q.remove();
-            if (vis[curr]==false) {
-                System.out.println(curr);
-                vis[curr] = true;
-                for (int i = 0; i < graph[curr].size(); i++) {
-                    Edge temp=graph[curr].get(i);
-                    q.add(temp.dst);
-                }
-            }
-        }
-
-    }
-
     public static void main(String[] args) {
         int v = 7;
         ArrayList<Edge> graph[] = new ArrayList[7];
         createGraph(graph);
-        bfs(graph,v);
-
+        boolean val[]=new boolean[7];
+        for(int i=0;i<7;i++){
+            val[i]=false;
+        }
+        dfs(graph, 1,val);
     }
 }
