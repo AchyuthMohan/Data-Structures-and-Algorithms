@@ -4,16 +4,12 @@ public class Main {
     public static void Lsearch(int nums[], int index, int target, int end, ArrayList<Integer> res) {
         if (index > end) {
             return;
-        } else {
-            if (nums[index] == target) {
-                res.add(index);
-                Lsearch(nums, index + 1, target, end, res);
-            }
-            else{
-                Lsearch(nums, index + 1, target, end, res);
-            }
-        
         }
+        if (nums[index] == target) {
+            res.add(index);
+        }
+        Lsearch(nums, index + 1, target, end, res);
+
     }
 
     public static void main(String[] args) {
