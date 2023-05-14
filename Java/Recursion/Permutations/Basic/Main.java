@@ -1,7 +1,7 @@
-public class Main {
+class Main{
     public static void main(String[] args) {
-        String p="abcd";
-        backtrack("", p);
+        String s="hello";
+        backtrack("", s);
     }
     static void backtrack(String p,String up){
         if(up.isEmpty()){

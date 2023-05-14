@@ -1,32 +1,47 @@
+import java.util.*;
+
 class Solution {
-    static int resFind(int nums[],int start,int end){
-        int mid=start+(end-start)/2;
-        if(nums[start]<nums[end]){
-            return nums[start];
+    static void backtrack(int coins[], int amount, List<Integer> res) {
+        for (int i = 0; i < coins.length; i++) {
+            if ((amount - coins[i]) >= 0 ) {
+                res.add(coins[i]);
+                System.out.println(res);
+                backtrack(coins, amount - coins[i], res);
+                amount+=res.remove(res.size()-1);
+                
+            } 
         }
-        if(nums.length==1){
-            return nums[0];
-        }
-        if(nums[mid+1]<nums[mid]){
-            return nums[mid+1];
-        }
-        if(nums[mid]>nums[end]){
-            return resFind(nums,mid,end);
-        }
-        else{
-            return resFind(nums,start,mid);
-        }
+        
     }
-    public static int findMin(int[] nums) {
-        return resFind(nums,0,nums.length-1);
+
+    public int coinChange(int[] coins, int amount) {
+        List<Integer> res = new ArrayList<>();
+
+        Arrays.sort(coins);
+        for (int i = 0, j = coins.length - 1; i < coins.length / 2; i++, j--) {
+            int temp = coins[i];
+            coins[i] = coins[j];
+            coins[j] = temp;
+        }
+
+        backtrack(coins, amount, res);
+        int sum = 0;
+        for (int num : res) {
+            sum += num;
+        }
+        System.out.println("Summed: " + sum);
+        if (sum != amount) {
+            return -1;
+        }
+        return res.size();
     }
 }
 
-class Main{
+class Main {
     public static void main(String[] args) {
-        Solution s=new Solution();
-        int nums[]=new int []{4,5,1,2,3};
-        int x=s.findMin(nums);
+        Solution s = new Solution();
+        int coins[] = new int[] { 2, 7, 5, 3, 9, 8, 6, 24 };
+        int x = s.coinChange(coins, 19);
         System.out.println(x);
     }
 }
