@@ -1,37 +1,64 @@
-import javax.swing.plaf.nimbus.State;
+import java.util.*;
+import java.io.*;
 
-class Solution {
-    public int minSubArrayLen(int target, int[] nums) {
-        int sum = 0;
-        int minLength = nums.length;
-        int start = 0;
-        int flag = 0;
-        int end = 0;
-        while (end < nums.length) {
-            sum = 0;
-            for (int i = start; i <= end; i++) {
-                sum += nums[i];
-            }
-            if (sum >= target) {
-                flag = 1;
-                minLength = Math.min(minLength, end - start + 1);
-                start++;
-            } else {
-                end++;
-            }
-        }
-        if (flag == 0) {
-            return 0;
-        } else {
-            return minLength;
-        }
-
+class Node {
+    Node left;
+    Node right;
+    int data;
+    
+    Node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
     }
 }
 
-public class Main {
-    public static void main(String[] args) {
-        Solution s = new Solution();
-        System.out.println(s.minSubArrayLen(11, new int[] { 1, 1, 1, 1, 1, 1, 1, 1 }));
+class Solution {
+    public static void topView(Node root) {
+        Node temp=root;
+        HashSet<Integer>set=new HashSet<>();
+        
+        while(temp!=null){
+            if(!set.contains(temp.data)){
+                System.out.print(temp.data+" ");
+                set.add(temp.data);
+            }
+            temp=temp.left;
+        }
+        temp=root;
+        while(temp!=null){
+            if(!set.contains(temp.data)){
+                System.out.print(temp.data+" ");
+                set.add(temp.data);
+            }
+            temp=temp.right;
+        }
     }
+    public static Node insert(Node root, int data) {
+        if(root == null) {
+            return new Node(data);
+        } else {
+            Node cur;
+            if(data <= root.data) {
+                cur = insert(root.left, data);
+                root.left = cur;
+            } else {
+                cur = insert(root.right, data);
+                root.right = cur;
+            }
+            return root;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int t = scan.nextInt();
+        Node root = null;
+        while(t-- > 0) {
+            int data = scan.nextInt();
+            root = insert(root, data);
+        }
+        scan.close();
+        topView(root);
+    }	
 }
