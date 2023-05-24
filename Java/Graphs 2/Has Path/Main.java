@@ -1,9 +1,9 @@
 import java.util.*;
-import java.util.LinkedList;
 
 public class Main {
     static int v = 7;
     static ArrayList<Edge>[] graph = new ArrayList[v];
+    static boolean visited[] = new boolean[v];
 
     static class Edge {
         int src, dest, wt;
@@ -16,6 +16,7 @@ public class Main {
     }
 
     static void createGraph() {
+        Scanner sc = new Scanner(System.in);
         for (int i = 0; i < graph.length; i++) {
             graph[i] = new ArrayList<>();
         }
@@ -39,26 +40,36 @@ public class Main {
         }
     }
 
-    static void bfs(ArrayList<Edge>[] graph) {
-        boolean visited[] = new boolean[graph.length];
-        Queue<Integer> q = new LinkedList<>();
-        q.offer(0);
-        while (!q.isEmpty()) {
-            int curr = q.poll();
-            if (!visited[curr]) {
-                System.out.print(curr + " ");
-                visited[curr] = true;
-                for (int i = 0; i < graph[curr].size(); i++) {
-                    Edge e = graph[curr].get(i);
-                    q.offer(e.dest);
-                }
+    static void dfs(ArrayList<Edge> graph[], boolean visited[], int curr) {
+        System.out.print(curr + " ");
+        visited[curr] = true;
+        for (int i = 0; i < graph[curr].size(); i++) {
+            Edge e = graph[curr].get(i);
+            if (!visited[e.dest]) {
+                dfs(graph, visited, e.dest);
             }
         }
     }
 
+    static boolean haspath(ArrayList<Edge>graph[],int s,int d,boolean visited[]){
+        if(s==d){
+            return true;
+        }
+        visited[s]=true;
+        for(int i=0;i<graph[s].size();i++){
+            Edge e=graph[s].get(i);
+            if(!visited[e.dest] && haspath(graph, e.dest, d, visited)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         createGraph();
-        bfs(graph);
+        System.out.println(haspath(graph, 0, 5,visited));
+        // dfs(graph, visited, 0);
+        // displayGraph();
 
     }
 }
