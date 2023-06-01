@@ -18,11 +18,11 @@ public class Main {
         for (int i = 0; i < graph.length; i++) {
             graph[i] = new ArrayList<>();
         }
-        // graph[0].add(new Edge(0, 1));
+        graph[0].add(new Edge(0, 1));
         graph[0].add(new Edge(0, 3));
         graph[0].add(new Edge(0, 2));
 
-        // graph[1].add(new Edge(1, 0));
+        graph[1].add(new Edge(1, 0));
         graph[1].add(new Edge(1, 2));
 
         graph[2].add(new Edge(2, 0));
@@ -55,10 +55,8 @@ public class Main {
                 if (detectCycleUtil(graph, visited, e.dest, curr)) {
                     return true;
                 }
-            } else if (visited[e.dest] && e.dest != parent) {
+            } else if (visited[e.dest] && parent != e.dest) {
                 return true;
-            } else {
-                continue;
             }
         }
         return false;
