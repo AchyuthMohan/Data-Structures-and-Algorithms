@@ -1,5 +1,7 @@
 import java.util.*;
 
+import javax.swing.plaf.synth.ColorType;
+
 public class Main {
     static int v = 5;
     static ArrayList<Edge>[] graph = new ArrayList[v];
@@ -34,16 +36,17 @@ public class Main {
 
     }
 
-    static boolean isBipartite(ArrayList<Edge>[] graph) {
+    static boolean isBipartite(ArrayList<Edge> graph[]) {
         int color[] = new int[graph.length];
+        Queue<Integer> q = new LinkedList<>();
+
         for (int i = 0; i < color.length; i++) {
             color[i] = -1;
         }
-        Queue<Integer> q = new LinkedList<>();
         for (int i = 0; i < graph.length; i++) {
             if (color[i] == -1) {
-                q.offer(i);
                 color[i] = 0;
+                q.offer(i);
                 while (!q.isEmpty()) {
                     int curr = q.poll();
                     for (int j = 0; j < graph[curr].size(); j++) {
@@ -54,19 +57,17 @@ public class Main {
                             } else {
                                 color[e.dest] = 0;
                             }
-                            q.offer(e.dest);
                         } else {
-                            if (color[e.dest] == color[i]) {
+                            if (color[e.dest] == color[curr]) {
                                 return false;
                             }
                         }
+                        q.offer(e.dest);
                     }
                 }
             }
         }
-
         return true;
-
     }
 
     public static void main(String[] args) {
