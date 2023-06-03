@@ -35,33 +35,32 @@ public class Main {
 
     }
 
-    static boolean detectCycle(ArrayList<Edge> graph[]) {
-        boolean visited[] = new boolean[graph.length];
-        for (int i = 0; i < graph.length; i++) {
-            if (!visited[i]) {
-                if (detectCycleUtil(graph, visited, i, -1)) {
+    static boolean detectCycle(ArrayList<Edge>[] graph){
+        boolean visited[]=new boolean[graph.length];
+        for(int i=0;i<graph.length;i++){
+            if(!visited[i]){
+                if(detectCycleUtil(graph, i, -1,visited)){
                     return true;
                 }
             }
         }
         return false;
     }
-
-    static boolean detectCycleUtil(ArrayList<Edge>[] graph, boolean visited[], int curr, int parent) {
-        visited[curr] = true;
-        for (int i = 0; i < graph[curr].size(); i++) {
-            Edge e = graph[curr].get(i);
-            if (!visited[e.dest]) {
-                if (detectCycleUtil(graph, visited, e.dest, curr)) {
-                    return true;
-                }
-            } else if (visited[e.dest] && parent != e.dest) {
+    static boolean detectCycleUtil(ArrayList<Edge>[] graph,int curr,int parent,boolean visited[]){
+        visited[curr]=true;
+        for(int i=0;i<graph[curr].size();i++){
+            Edge e=graph[curr].get(i);
+            if(!visited[e.dest]){
+                return detectCycleUtil(graph, e.dest, curr, visited);
+            }
+            else if(visited[e.dest] && parent!=e.dest){
                 return true;
             }
         }
         return false;
+        
     }
-
+      
     public static void main(String[] args) {
         createGraph();
         System.out.println(detectCycle(graph));

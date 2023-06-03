@@ -36,6 +36,16 @@ public class Main {
         }
     }
 
+    
+
+    static void dfs(ArrayList<Edge>[] graph) {
+        boolean visited[] = new boolean[graph.length];
+        for (int i = 0; i < graph.length; i++) {
+            if (!visited[i]) {
+                dfsUtil(graph, i, visited);
+            }
+        }
+    }
     static void dfsUtil(ArrayList<Edge>[] graph, int curr, boolean visited[]) {
         System.out.print(curr + " ");
         visited[curr] = true;
@@ -46,16 +56,6 @@ public class Main {
             }
         }
     }
-
-    static void dfs(ArrayList<Edge>[] graph) {
-        boolean visited[] = new boolean[graph.length];
-        for (int i = 0; i < graph.length; i++) {
-            if (!visited[i]) {
-                dfsUtil(graph, i, visited);
-            }
-        }
-    }
-
     public static void main(String[] args) {
         createGraph();
         dfs(graph);
