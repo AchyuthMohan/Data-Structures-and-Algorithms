@@ -27,27 +27,28 @@ public class Main {
     }
 
     static void bfs(ArrayList<Edge>[] graph) {
-        boolean visited[]=new boolean[graph.length];
-        for(int i=0;i<graph.length;i++){
-            if(!visited[i]){
-                bfsUtil(graph, visited,i);
+        boolean visited[] = new boolean[graph.length];
+        for (int i = 0; i < graph.length; i++) {
+            if (!visited[i]) {
+                bfsUtil(graph, visited, i);
             }
         }
     }
 
-    static void bfsUtil(ArrayList<Edge>[]graph,boolean visited[],int s){
-        Queue<Integer>q=new LinkedList<>();
-        q.offer(s);
-        while(!q.isEmpty()){
-            int curr=q.poll();
-            if(!visited[curr]){
-                System.out.print(curr+" ");
-                visited[curr]=true;
-                for(int i=0;i<graph[curr].size();i++){
-                    Edge e=graph[curr].get(i);
+    static void bfsUtil(ArrayList<Edge>[] graph, boolean visited[], int curr) {
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(curr);
+        while (!q.isEmpty()) {
+            int c = q.poll();
+            if (!visited[c]) {
+                visited[c] = true;
+                System.out.print(c + " ");
+                for (int i = 0; i < graph[c].size(); i++) {
+                    Edge e = graph[c].get(i);
                     q.offer(e.dest);
                 }
             }
+
         }
     }
 
