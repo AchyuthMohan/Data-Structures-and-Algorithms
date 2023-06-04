@@ -1,61 +1,53 @@
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Main {
-    static int v = 7;
+    static int v = 6;
     static ArrayList<Edge>[] graph = new ArrayList[v];
-    static boolean visited[] = new boolean[v];
 
     static class Edge {
-        int src, dest, wt;
+        int src, dest;
 
-        Edge(int src, int dest, int wt) {
-            this.src = src;
+        Edge(int src, int dest) {
             this.dest = dest;
-            this.wt = wt;
+            this.src = src;
         }
     }
 
-    static void createGraph() {
-        Scanner sc = new Scanner(System.in);
-        for(int i=0;i<graph.length;i++){
-            graph[i]=new ArrayList<>();
-        }
-        graph[0].add(new Edge(0,1,0));
-        graph[0].add(new Edge(0,2,0));
-        graph[1].add(new Edge(1,3,0));
-        graph[2].add(new Edge(2,4,0));
-        graph[3].add(new Edge(3,5,0));
-        graph[3].add(new Edge(3,4,0));
-        graph[4].add(new Edge(4,5,0));
-        graph[5].add(new Edge(5,6,0));
-    }
-
-    static void displayGraph() {
-        System.out.println("Graph: ");
+    static void createGraph(ArrayList<Edge>[] graph) {
         for (int i = 0; i < graph.length; i++) {
-            for (int j = 0; j < graph[i].size(); j++) {
-                System.out.println("Src: " + graph[i].get(j).src + " Dest: " + graph[i].get(j).dest + " WT: "
-                        + graph[i].get(j).wt);
+            graph[i] = new ArrayList<>();
+        }
+        graph[5].add(new Edge(5, 0));
+        graph[5].add(new Edge(5, 2));
+
+        graph[2].add(new Edge(2, 3));
+        graph[3].add(new Edge(3, 1));
+        graph[4].add(new Edge(4, 0));
+        graph[4].add(new Edge(4, 1));
+    }
+
+    static void dfs(ArrayList<Edge>[] graph) {
+        boolean visited[] = new boolean[graph.length];
+        for (int i = 0; i < graph.length; i++) {
+            if (!visited[i]) {
+
             }
         }
     }
 
-    static void dfs(ArrayList<Edge> graph[], boolean visited[], int curr) {
-        System.out.print(curr + " ");
+    static void dfsUtil(ArrayList<Edge>[] graph, boolean visited[], int curr) {
         visited[curr] = true;
+        System.out.print(curr + " ");
         for (int i = 0; i < graph[curr].size(); i++) {
-            Edge e=graph[curr].get(i);
-            if(!visited[e.dest]){
-                dfs(graph, visited, e.dest);
+            Edge e = graph[curr].get(i);
+            if (!visited[e.dest]) {
+                dfsUtil(graph, visited, e.dest);
             }
         }
     }
 
     public static void main(String[] args) {
-        createGraph();
-        dfs(graph, visited, 0);
-        // displayGraph();
-
+        createGraph(graph);
+        dfs(graph);
     }
 }
