@@ -28,16 +28,15 @@ public class Main {
     }
 
     static void calcIndeg(ArrayList<Edge>[] graph, int indeg[]) {
-        for(int i=0;i<graph.length;i++){
-            for(int j=0;j<graph[i].size();j++){
-                Edge e=graph[i].get(j);
-                indeg[e.dest]=indeg[e.dest]+1;
+        for (int i = 0; i < graph.length; i++) {
+            for (int j = 0; j < graph[i].size(); j++) {
+                Edge e = graph[i].get(j);
+                indeg[e.dest]++;
             }
         }
     }
 
     static void topSort(ArrayList<Edge>[] graph) {
-        
         int indeg[] = new int[graph.length];
         calcIndeg(graph, indeg);
         Queue<Integer> q = new LinkedList<>();
@@ -56,6 +55,7 @@ public class Main {
                     q.offer(e.dest);
                 }
             }
+
         }
     }
 

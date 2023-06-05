@@ -32,23 +32,24 @@ public class Main {
         Stack<Integer>s=new Stack<>();
         for(int i=0;i<graph.length;i++){
             if(!visited[i]){
-                topSortUtil(graph, visited, i,s);
+                topSortUtil(graph, i, visited,s);
             }
         }
         while(!s.isEmpty()){
-            System.out.println(s.pop());
+            System.out.print(s.pop()+" ");
         }
     }
-static void topSortUtil(ArrayList<Edge>[]graph,boolean visited[],int curr,Stack<Integer>s){
-    visited[curr]=true;
-    for(int i=0;i<graph[curr].size();i++){
-        Edge e=graph[curr].get(i);
-        if(!visited[e.dest]){
-            topSortUtil(graph, visited, e.dest,s);
+    static void topSortUtil(ArrayList<Edge>[]graph,int curr,boolean visited[],Stack<Integer>s){
+        visited[curr]=true;
+        for(int i=0;i<graph[curr].size();i++){
+            Edge e=graph[curr].get(i);
+            if(!visited[e.dest]){
+                topSortUtil(graph, e.dest, visited, s);
+            }
         }
+        s.push(curr);
     }
-    s.push(curr);
-}
+
     public static void main(String[] args) {
         createGraph(graph);
         topSort(graph);
