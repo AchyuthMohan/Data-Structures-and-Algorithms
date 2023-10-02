@@ -51,7 +51,9 @@ public class Main {
         for(int i=0;i<graph[curr].size();i++){
             Edge e=graph[curr].get(i);
             if(!visited[e.dest]){
-                return detectCycleUtil(graph, e.dest, curr, visited);
+                if(detectCycleUtil(graph, e.dest, curr, visited)){
+                    return true;
+                }   
             }
             else if(visited[e.dest] && parent!=e.dest){
                 return true;
