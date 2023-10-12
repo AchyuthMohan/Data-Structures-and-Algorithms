@@ -1,18 +1,18 @@
 import java.util.*;
 
 public class SimpleBFS {
-    static void bfs(int adj[][],boolean visited[],int start,List<Integer>res){
-        Queue<Integer>q=new LinkedList<>();
-        q.offer(start);
-        while(!q.isEmpty()){
-            int size=q.size();
-            for(int i=0;i<size;i++){
-                int temp=q.poll();
-                if(!visited[temp]){
-                    visited[temp]=true;
+    static void bfs(int adj[][],boolean visited[],List<Integer>res,int start){
+        Queue<Integer>q=new LinkedList<>(); 
+        if(!visited[start]){
+            q.offer(start);
+            while(!q.isEmpty()){
+                int size=q.size();
+                for(int i=0;i<size;i++){
+                    int temp=q.poll();
                     res.add(temp);
+                    visited[temp]=true;
                     for(int j=0;j<adj[temp].length;j++){
-                        if(!visited[j] && adj[temp][i]==1){
+                        if(!visited[j] && adj[temp][j]==1){
                             q.offer(j);
                         }
                     }
@@ -22,12 +22,13 @@ public class SimpleBFS {
     }
     static void bfsUtil(int adj[][],List<Integer>res){
         boolean visited[]=new boolean[adj.length];
-        for(int i=0;i<visited.length;i++){
+        for(int i=0;i<adj.length;i++){
             if(!visited[i]){
-                bfs(adj, visited, i, res);
+                bfs(adj, visited, res, i);
             }
         }
     }
+    
     public static void main(String[] args) {
         int adj[][]=new int[6][6];
         adj[1][2]=1;

@@ -1,19 +1,22 @@
 import java.util.*;
 
 public class SimpleDFS {
-    static void dfs(int adj[][],boolean visited[],int start,List<Integer>res){
-        res.add(start);
-        visited[start]=true;
-        for(int i=0;i<adj[start].length;i++){
-            if(adj[start][i]==1 && !visited[i]){
-                dfs(adj, visited, i, res);
+    static void dfs(int adj[][],boolean visited[],List<Integer>res,int start){
+        if(!visited[start]){
+            res.add(start);
+            visited[start]=true;
+            for(int i=0;i<adj[start].length;i++){
+                if(!visited[i] && adj[start][i]==1){
+                    dfs(adj, visited, res, i);
+                }
             }
         }
     }
-    static void dfsUtil(int adj[][],boolean visited[],List<Integer>res){
-        for(int i=0;i<visited.length;i++){
+    static void dfsUtil(int adj[][],List<Integer>res){
+        boolean visited[]=new boolean[adj.length+1];
+        for(int i=0;i<adj.length;i++){
             if(!visited[i]){
-                dfs(adj, visited, i, res);
+                dfs(adj, visited, res, i);
             }
         }
     }
@@ -28,8 +31,7 @@ public class SimpleDFS {
         adj[3][0]=1;
         adj[4][0]=1;
         List<Integer>res=new ArrayList<>();
-        boolean visited[]=new boolean[5];
-        dfsUtil(adj, visited, res);
+        dfsUtil(adj, res);
         for(int i:res){
             System.out.print(i+" ");
         }
